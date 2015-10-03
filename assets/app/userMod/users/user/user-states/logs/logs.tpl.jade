@@ -1,0 +1,40 @@
+div#user-profile-logs
+  div
+    div.col-md-12
+      div.col-md-1
+      div.col-md-7
+        div.input-group
+          input(type="text" class="form-control" placeholder="Search for...", ng-model='searchLogs')
+          span.input-group-btn
+            button.btn.btn-default(type="button") Go
+      div.form-group.col-md-4#filter-logs
+        div.col-sm-8
+          select.form-control(ng-change='sortLogs()', ng-model='sortType')
+            option(value='date') Date
+            option(value='name') Name
+            option(value='location') Location
+        label.control-label.col-sm-4(for="response")
+          span.filter-label Sort by
+    div.col-md-12
+      ul.timeline
+        li.timeline-blue(ng-class="{'timeline-noline': $index == logs.length-1}",
+          ng-repeat="log in logs | filter:searchLogs")
+          div.timeline-time
+            span.time {{log.fullName}}
+            span.date {{log.createdAt | date: 'yyyy-MM-dd'}}
+            span.time {{log.createdAt | date: 'HH:mm:ss'}}
+            span.date {{log.time}} mins
+            span.date {{log.location}}
+          div.timeline-icon
+            i.fa.fa-taxi
+          div.timeline-body
+            h2 {{log.groupName}} &nbsp; {{log.sourceName}}
+            div.timeline-content
+              div.content-log
+                strong Content
+                p {{log.content | limitTo: 250}}...
+              div.notes-log
+                strong Notes
+                p {{log.notes | limitTo: 250}}...
+            div.timeline-footer
+              button.btn.btn-default.button-more(ui-sref="users.user.log-details({logId: log.id})") view

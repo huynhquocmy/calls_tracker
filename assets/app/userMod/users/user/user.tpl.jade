@@ -1,0 +1,56 @@
+div#user-profile-container.full-height
+  div#user-authenticate-container
+    div.ua-buttons
+      button(type="button" class="btn btn-success") Profile
+
+      form(action='/logout', method='get', style="float: right")    
+        button(type="submit" class="btn btn-danger") Logout
+  div#user-profile-info.half-height
+    div#user-profile-info-left.col-md-5
+      div.user-avartar-container.height-70
+        div.user-avartar.col-md-5.full-height
+          img.img-circle(src="/images/avatar_solid_black.png")
+        div.user-information.col-md-7.full-height
+          div.user-info-item.user-name {{currentUser.lastName}} {{currentUser.firstName}}
+          div.user-info-item
+            span.user-info-key Gender
+            span &nbsp; {{currentUser.gender}}
+          div.user-info-item
+            span.user-info-key Age
+            span &nbsp; {{currentUser.age}}
+          div.user-info-item
+            span.user-info-key Title
+            span &nbsp; {{currentUser.title}}
+
+      div.user-summarize.height-30
+        div.col-md-3.today-logs
+          div Today
+          span {{todayLogs}}
+        div.col-md-3.thisweek-logs
+          div This week
+          span {{weekLogs}}
+        div.col-md-3.thisweek-logs
+          div This Month
+          span {{monthLogs}}
+        div.col-md-3.total-logs
+          div Total
+          span {{allLogs}}
+
+    div#user-profile-info-right.col-md-7
+      div#user-pie-chart.col-md-9
+      //- div.col-md-2
+      div#filter-pie-chart.col-md-3
+        select.form-control(ng-model='currentResponseFilter', ng-change='getNumberOfResponse()')
+          option(value='all') All time
+          option(value='today') Today
+          option(value='week') This week
+          option(value='month') This month
+      div#user-tabs
+        ul.nav.nav-tabs
+          li(ng-class="{active: current.stateName == 'overview'}")
+            a(ui-sref="users.user.overview") Overview
+          li(ng-class="{active: current.stateName == 'logs'}")
+            a(ui-sref="users.user.logs") Logs
+          li(ng-class="{active: current.stateName == 'new-call'}")
+            a(ui-sref="users.user.new-call") New Call
+  div(ui-view="user-states")

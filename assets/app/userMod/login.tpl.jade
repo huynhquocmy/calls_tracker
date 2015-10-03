@@ -1,0 +1,14 @@
+div
+  div.signup-btn
+    button(type="button" class="btn btn-success ct-signup-btn" ui-sref="signup") Sign up
+  form.form-signin(action="/auth/authenticate" method="post")
+    h2.form-signin-heading Please sign in
+    label(for="inputEmail", class="sr-only") Email address
+    input(name="email", type="email" id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="")
+    label(for="inputPassword" class="sr-only") Password
+    input(name="password", type="password" id="inputPassword" class="form-control" placeholder="Password" required="")
+    div.checkbox
+      label
+        input(type="checkbox" value="remember-me")
+        span Remember me
+    button(type="submit", class="btn btn-lg btn-primary btn-block") Sign in

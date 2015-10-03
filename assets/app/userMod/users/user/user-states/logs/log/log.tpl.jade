@@ -1,0 +1,86 @@
+div.container#log-details-container
+  form.form-horizontal.md-col-12(role="form")
+    div.left-side.col-md-6
+      div.form-group
+        label.control-label.col-sm-4(for="name")
+        div.col-sm-8.input-group
+          div.input-group-addon
+            span.fa.fa-close.fa-envelope Name
+          input(ng-focus="edit", ng-disabled="!edit", type="text", class="form-control", id="name", placeholder="Enter name", ng-model="LogModel.fullName", value="{{LogModel.fullName}}")
+      div.form-group
+        label.control-label.col-sm-4(for="phone")
+        div.col-sm-8.input-group
+          div.input-group-addon
+            span.fa.fa-close.fa-envelope Phone
+          input(ng-disabled="!edit", type="text", class="form-control", id="phone", placeholder="Enter Phone", ng-model="LogModel.phone", value="{{LogModel.phone}}")
+      div.form-group
+        label.control-label.col-sm-4(for="email")
+        div.col-sm-8.input-group
+          div.input-group-addon
+            span.fa.fa-close.fa-envelope Email
+          input( ng-disabled="!edit", type="email", class="form-control", id="email", placeholder="Enter email", ng-model="LogModel.email", value="{{LogModel.email}}")
+      
+      div.form-group
+        label.control-label.col-sm-4(for="call-group")
+        div.col-sm-8.input-group
+          div.input-group-addon
+            span.fa.fa-close.fa-envelope Call Source
+          select.form-control(ng-model="LogModel.source", ng-disabled="!edit")
+            option Select a source
+            option(value=1) Google
+            option(value=2) Phoenix ch5 - CBS
+            option(value=3) Arizona Republic
+
+      div.form-group
+        label.control-label.col-sm-4(for="call-group")
+        div.col-sm-8.input-group
+          div.input-group-addon
+            span.fa.fa-close.fa-envelope Call Group
+          select.form-control(ng-model="LogModel.group", ng-disabled="!edit")
+            option Select a Group
+            option(value=1) Mustard
+            option(value=2) Ketchup
+            option(value=3) Relish
+      
+      div.form-group
+        label.control-label.col-sm-4(for="time")
+        div.col-sm-8.input-group
+          div.input-group-addon
+            span.fa.fa-close.fa-envelope Time
+          input( ng-disabled="!edit", type="text", class="form-control", id="time", placeholder="Enter Time", ng-model="LogModel.time", value="{{LogModel.time}}")
+      
+      div.form-group
+        label.control-label.col-sm-4(for="location")
+        div.col-sm-8.input-group
+          div.input-group-addon
+            span.fa.fa-close.fa-envelope Location
+          input(ng-disabled="!edit", type="text", class="form-control", id="location", placeholder="Enter location", ng-model="LogModel.location")
+
+
+      div.form-group
+        label.control-label.col-sm-4(for="response")
+        div.col-sm-8.input-group
+          div.input-group-addon
+            span.fa.fa-close.fa-envelope Response
+          select.form-control( ng-disabled="!edit")
+            option Positive
+            option Negative
+    div.right-side.col-md-6
+      div.form-group
+        div.col-sm-10.input-group
+          div.input-group-addon
+            span.fa.fa-close.fa-envelope Content
+          textarea( ng-disabled="!edit", class="form-control", id="call-content", placeholder="Enter Content", ng-model="LogModel.content", value="{{LogModel.content}}")
+      div.form-group
+        div.col-sm-10.input-group
+          div.input-group-addon
+            span.fa.fa-close.fa-envelope Notes
+          textarea( ng-disabled="!edit", class="form-control", id="call-notes", placeholder="Enter Notes", ng-model="LogModel.notes", value="{{LogModel.notes}}")
+    div.form-group 
+      div.col-sm-offset-2.col-sm-8
+        button.btn.btn-success(ng-click='updateLog()', type="submit", ng-if="edit")
+          span Submit
+        button.btn.btn-success(type="button", ng-if="!edit", ng-click="editLog();")
+          span Edit
+        button.btn.btn-default(ng-click="backToPreviousState()")
+          span Cancel

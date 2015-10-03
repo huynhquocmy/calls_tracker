@@ -1,0 +1,29 @@
+div#user-profile-logs
+  div#user-profile-logs-left.col-md-5.full-height
+    div.user-logs-title Call logs today ({{logs.length}})
+    div.user-logs-list
+        ul.list-group
+          li.list-group-item(ng-repeat="log in logs track by $index")
+            div.col-md-5.log-item-left.full-height
+              div.log-item
+                span.glyphicon.glyphicon-user &nbsp;
+                span {{log.fullName}}
+              div.log-item
+                span.glyphicon.glyphicon-phone-alt &nbsp;
+                span {{log.phone}}
+              div.log-item
+                span.glyphicon.glyphicon-time &nbsp;
+                span {{log.time}} (min)
+            div.col-md-7.log-item-right.full-height
+              div.content
+                strong Content &nbsp;
+                p {{log.content | limitTo: 170}}...
+              div.view-log
+                button.btn.btn-info(ui-sref="users.user.log-details({logId: log.id})") view
+
+  div#user-profile-logs-right.col-md-7.full-height
+    select.form-control(ng-model='selectedDate', ng-change='getLogsHistory()')
+      option(value='week') This week
+      option(value='month') This month
+      option(value='year') This year
+    div#user-bar-charts

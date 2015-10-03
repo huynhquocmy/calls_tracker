@@ -1,0 +1,52 @@
+doctype html
+html
+  head
+    title= title
+
+    // Viewport mobile tag for sensible mobile support
+    meta(name="viewport",content="width=device-width, initial-scale=1, maximum-scale=1")
+
+    block styles
+    // STYLES
+    link(rel="stylesheet", href="/styles/bootstrap.css")
+    link(rel="stylesheet", href="/styles/importer.css")
+    // STYLES END
+
+  body(ng-app="callTracker" ng-controller="AppCtrl")
+    
+    block body
+
+    // The linker searches for this tag and adds js.  If there's no linker, we point to sails.io.js
+    // SCRIPTS
+    script(src="/vendor/jquery/jquery.js")
+    script(src="/vendor/jquery-ui/jquery-ui.js")
+    script(src="/vendor/angular/angular.js")
+    script(src="/vendor/angular-bootstrap/ui-bootstrap-tpls.js")
+    script(src="/vendor/angular-xml/angular-xml.js")
+    script(src="/vendor/moment/moment.js")
+    script(src="/vendor/lodash/lodash.compat.js")
+    script(src="/vendor/angular-touch/angular-touch.js")
+    script(src="/vendor/angular-ui-router/angular-ui-router.js")
+    script(src="/vendor/angular-animate/angular-animate.js")
+    script(src="/vendor/angular-youtube-mb/angular-youtube-embed.js")
+    script(src="/js/dependencies/sails.io.js")
+    script(src="/vendor/highcharts-release/highcharts.js")
+    script(src="/vendor/restangular/restangular.js")
+    script(src="/libs/fancyboxes.js")
+    script(src="/app/adminMod/appMod.js")
+    script(src="/app/app.js")
+    script(src="/app/templates-app.productPage.js")
+    script(src="/app/userMod/controllers/profileController.js")
+    script(src="/app/userMod/login.js")
+    script(src="/app/userMod/services/highchartsService.js")
+    script(src="/app/userMod/signup.js")
+    script(src="/app/userMod/users/user/user-states/logs/log/log.js")
+    script(src="/app/userMod/users/user/user-states/logs/logs.js")
+    script(src="/app/userMod/users/user/user-states/new-call/new-call.js")
+    script(src="/app/userMod/users/user/user-states/overview/overview.js")
+    script(src="/app/userMod/users/user/user-states/setting/setting.js")
+    script(src="/app/userMod/users/user/user-states/user-states.js")
+    script(src="/app/userMod/users/user/user.js")
+    script(src="/app/userMod/users/users.js")
+    // SCRIPTS END
+

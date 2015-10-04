@@ -26,37 +26,6 @@ module.exports = {
 		});
 	},
 
-	login: function (req, res) {
-		var userParams = {
-			email: req.param('email'),
-			password: req.param('password'),
-			username: req.param('username')
-		};
-
-		UserService.login(userParams, function (err, user) {
-			if (err) {
-				return res.json(400, err);
-			} else {
-				sails.log.debug(user);
-				if (!user) {
-					return res.redirect("/");
-				}
-
-				var secretKey = nconf.get('JWT_SECRET');
-
-
-				var token = jwt.sign(user, secretKey, {
-				  expiresInMinutes: 1440 // expires in 24 hours
-				});
-				return res.json({
-					token: token,
-					user: user,
-					status: 200
-				});
-			}
-		});
-	},
-
 	getUserById: function (req, res) {
 		if (!req.param('userId')) {
 			return res.status(400).json({
@@ -72,41 +41,5 @@ module.exports = {
 				return res.status(200).json(user);
 			}
 		});
-	},
-
-	auth: function (req, res, next) {
-		_log.info('authend');
-		var secretKey = nconf.get('JWT_SECRET');
-		_log.info(secretKey);
-		// check header or url parameters or post parameters for token
-		 var token = req.param('token') || req.headers['x-access-token'];
-
-		 // decode token
-		 if (token) {
-
-		     // verifies secret and checks exp
-		     jwt.verify(token, secretKey, function(err, decoded) {
-		         if (err) {
-		             return res.json({
-		                 success: false,
-		                 message: 'Failed to authenticate token.'
-		             });
-		         } else {
-		             // if everything is good, save to request for use in other routes
-		             req.decoded = decoded;
-		             next();
-		         }
-		     });
-
-		 } else {
-
-		     // if there is no token
-		     // return an error
-		     return res.status(403).send({
-		         success: false,
-		         message: 'No token provided.'
-		     });
-
-		 }
 	}
 }

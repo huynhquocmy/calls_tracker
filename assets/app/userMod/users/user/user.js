@@ -22,7 +22,9 @@ userMod
     $scope.current = {};
 
     $scope.getNumberOfLogs = function () {
-      Restangular.all('log').all('getCountLogs').getList('').then(function(count) {
+      Restangular.all('log').all('getCountLogs').getList({
+        userId: $stateParams.userId
+      }).then(function(count) {
         $scope.todayLogs = _.find(count, function (item) {
           return item.type === 'today';
         }).value;
@@ -67,6 +69,8 @@ userMod
       if ($scope.currentResponseFilter === 'all') {
         params = {};
       }
+
+      params.userId = $stateParams.userId;
 
       Restangular.all('log').all('getCountResponseLogs').get('', params).then(function(count) {
         $scope.positiveLogs = _.find(count, function (item) {

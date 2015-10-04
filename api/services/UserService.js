@@ -1,5 +1,6 @@
 
-
+var bunyan = require('bunyan');
+var _log = bunyan.createLogger({name: 'calls-tracker'});
 module.exports = {
   create : function (params, cb) {
 
@@ -11,22 +12,46 @@ module.exports = {
       return cb(new Error({message : 'No password was entered.', code : 'Error.Passport.Password.Missing'}));
     }
 
-    var user = _.assign({}, params);
+    var userSubmit = _.assign({}, params);
 
-    User.create(user, function (err, user) {
-      if (err) {
-        if (err.code === 'E_VALIDATION') {
-          if (err.invalidAttributes.email) {
-            sails.log.error('Error.Passport.Email.Exists');
+    async.waterfall([
+      function (wtcb) {
+        User.findOne({email: params.email}, function (err, user) {
+          if (err) {
+            wtcb(err);
           } else {
-            sails.log.error('Error.Passport.User.Exists');
+            wtcb(null, user);
           }
-        }        
-        return cb(err);
-      } else {
-        cb(null, user);
+        })
+      },
+      function (user, wtcb) {
+        if (user) {
+          wtcb(user)
+        } else {
+          wtcb(null)
+        }
       }
+    ], function (err) {
+      if (err) {
+        return cb(err);
+      }
+
+      User.create(userSubmit, function (err, user) {
+        if (err) {
+          if (err.code === 'E_VALIDATION') {
+            if (err.invalidAttributes.email) {
+              sails.log.error('Error.Passport.Email.Exists');
+            } else {
+              sails.log.error('Error.Passport.User.Exists');
+            }
+          }        
+          return cb(err);
+        } else {
+          cb(null, user);
+        }
+      });
     });
+    
   },
 
   login: function (params, cb) {

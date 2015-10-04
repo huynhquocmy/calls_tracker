@@ -14,7 +14,8 @@ module.exports = {
 			location: req.param('location'),
 			response: req.param('response'),
 			source: req.param('source'),
-			email: req.param('email')
+			email: req.param('email'),
+			userId: req.param('userId')
 		};
 
 		LogService.createLog(params, function (err, log) {
@@ -27,7 +28,8 @@ module.exports = {
 	},
 
 	getLogs: function(req, res) {
-		LogService.getLogs(req, function (err, logs) {
+		var requestParams = req.params.all();
+		LogService.getLogs(requestParams, function (err, logs) {
 			if (err) {
 				res.json(err);
 			} else {
@@ -90,6 +92,10 @@ module.exports = {
 	},
 
 	getCountLogs: function (req, res) {
+		var requestParams = req.params.all();
+		if (!requestParams.userId) {
+			return res.status(500).json();
+		}
 		async.parallel([
 			function countToday(cb) {
 				var params = {
@@ -101,7 +107,8 @@ module.exports = {
 					createdAt: {
 						'>=': params.startDate,
 						'<=': params.endDate
-					}
+					},
+					userId: requestParams.userId
 				})
 				.exec(function (err, number) {
 					if (err) {
@@ -126,7 +133,8 @@ module.exports = {
 					createdAt: {
 						'>=': params.startDate,
 						'<=': params.endDate
-					}
+					},
+					userId: requestParams.userId
 				})
 				.exec(function (err, number) {
 					if (err) {
@@ -151,7 +159,8 @@ module.exports = {
 					createdAt: {
 						'>=': params.startDate,
 						'<=': params.endDate
-					}
+					},
+					userId: requestParams.userId
 				})
 				.exec(function (err, number) {
 					if (err) {
@@ -167,6 +176,9 @@ module.exports = {
 
 			function countAll(cb) {
 				Log.count()
+				.where({
+					userId: requestParams.userId
+				})
 				.exec(function (err, number) {
 					if (err) {
 						cb(err)
@@ -197,8 +209,10 @@ module.exports = {
 			positiveQuery.createdAt =  {
 				'>=': params.startDate,
 				'<=': params.endDate
-			}
+			};
 		}
+
+		positiveQuery.userId = params.userId;
 
 		var negativeQuery = {
 			response: 2
@@ -208,10 +222,11 @@ module.exports = {
 			negativeQuery.createdAt =  {
 				'>=': params.startDate,
 				'<=': params.endDate
-			}
+			};
 		}
 
-
+		negativeQuery.userId = params.userId;
+		
 		async.parallel([
 			function positiveLogs(cb) {
 				Log.count()

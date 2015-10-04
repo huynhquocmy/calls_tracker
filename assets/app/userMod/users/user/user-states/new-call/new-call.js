@@ -14,7 +14,8 @@ userMod.controller("UserNewcallController", ['$scope', 'Restangular', '$state',
   	content: '',
   	notes: '',
   	location: '',
-    source: 1
+    source: 1,
+    userId: $state.params.userId
   };
 
   $scope.createLog = function () {

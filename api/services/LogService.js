@@ -22,7 +22,11 @@ module.exports = {
 	},
 
 	getLogs: function (params, cb) {
-		Log.find(function(error, logs) {
+		Log.find()
+		.where({
+			userId: params.userId
+		})
+		.exec(function(error, logs) {
 			if (error) {
 				return cb(error);
 			} else {
@@ -44,15 +48,6 @@ module.exports = {
 					], function(err, log) {
 						mapCb(null, log);
 					});
-
-					// CallGroup.findOne(log.group, function(err, group) {
-					// 	if (err) {
-					// 		cb(err);
-					// 	} else {
-					// 		log.groupName = group.name;
-					// 		mapCb(null, log);
-					// 	}
-					// });
 				}, function(err, logsWithGroupName) {
 					cb(logsWithGroupName);
 				});
@@ -65,7 +60,6 @@ module.exports = {
 			if (err) {
 				cb(err);
 			} else {
-
 				async.waterfall([
 					function (cbwf) {
 						CallGroup.findOne(log.group, function (err, group) {
@@ -86,29 +80,27 @@ module.exports = {
 						cb(log);
 					}
 				});
-
-
 			}
 		})
 	},
 
 	getLogsByDate: function (params, cb) {
 		Log.find()
-			.where({
-				createdAt: {
-					'>=': params.startDate,
-					'<=': params.endDate
-				}
-			})
-			.sort({
-				createdAt: 'asc'
-			})
-			.exec(function(err, logs) {
-				if (err) {
-					return cb(err);
-				}
-
-				cb(null, logs);
-			});
+		.where({
+			createdAt: {
+				'>=': params.startDate,
+				'<=': params.endDate
+			},
+			userId: params.userId
+		})
+		.sort({
+			createdAt: 'asc'
+		})
+		.exec(function(err, logs) {
+			if (err) {
+				return cb(err);
+			}
+			cb(null, logs);
+		});
 	}
 }

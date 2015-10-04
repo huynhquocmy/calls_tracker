@@ -1,6 +1,6 @@
 
-userMod.controller("UserOverviewController", ['$scope', 'highchartService', 'Restangular',
- function ($scope, highchartService, Restangular){
+userMod.controller("UserOverviewController", ['$scope', 'highchartService', 'Restangular', '$stateParams',
+ function ($scope, highchartService, Restangular, $stateParams){
   
   var charts = highchartService;
 
@@ -12,7 +12,8 @@ userMod.controller("UserOverviewController", ['$scope', 'highchartService', 'Res
 	$scope.getLogsByDate = function (params) {
 		Restangular.all('log').all('getLogsByDate').getList({
 			startDate: params.startDate,
-			endDate: params.endDate
+			endDate: params.endDate,
+			userId: $stateParams.userId 
 		}).then(function(logs) {
 			$scope.filterLogs = logs;
 			$scope.renderChart();
@@ -25,7 +26,8 @@ userMod.controller("UserOverviewController", ['$scope', 'highchartService', 'Res
 
 		Restangular.all('log').all('getLogsByDate').getList({
 			startDate: startDate,
-			endDate: endDate
+			endDate: endDate,
+			userId: $stateParams.userId 
 		}).then(function(logs) {
 			$scope.logs = logs;
 		});

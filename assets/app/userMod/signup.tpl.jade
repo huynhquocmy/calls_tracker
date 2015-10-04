@@ -5,54 +5,66 @@ div#new-user-container.col-md-12
         div.signup-label
           span Name
         div.signup-input
-          input(type="text", class="form-control" placeHolder="first name" class="signup-firstname")
-          input(type="text", class="form-control", placeHolder="last name" class="signup-lastname")
-
+          input(ng-model="newUser.firstName", type="text", class="form-control" placeHolder="first name" class="signup-firstname")
+          input(ng-model="newUser.lastName", type="text", class="form-control", placeHolder="last name" class="signup-lastname")
+        div.alert.alert-warning(ng-show='(!newUser.firstName || !newUser.lastName) && isSubmiting')
+          strong Full name is required.
       div.signup-item
         div.signup-label
           span Gender
         div.signup-input
             label.radio-inline
-              input(type="radio", name="gender")
+              input(ng-model="newUser.gender", value='male', type="radio", name="gender")
               span Male
             label.radio-inline
-              input(type="radio", name="gender")
+              input(ng-model="newUser.gender", value='female', type="radio", name="gender")
               span Female
       div.signup-item
         div.signup-label
           span Email
         div.signup-input
-          input(type="text", class="form-control", placeHolder="email")
-
+          input(name="email", ng-model="newUser.email", type="email", class="form-control", placeHolder="email")
+        div.alert.alert-warning(ng-show='!newUser.email && isSubmiting')
+          strong Email is required.
+        div.alert.alert-warning(ng-show='existing')
+          strong Email is already used.
       div.signup-item
         div.signup-label
           span Phone
         div.signup-input
-          input(type="text", class="form-control", placeHolder="phone")
-
+          input(ng-model="newUser.phone", type="text", class="form-control", placeHolder="phone")
+        div.alert.alert-warning(ng-show='!newUser.phone && isSubmiting')
+          strong Phone is required.
       div.signup-item
         div.signup-label
           span Title
         div.signup-input
-          input(type="text", class="form-control", placeHolder="title")
-
+          input(ng-model="newUser.title", type="text", class="form-control", placeHolder="title")
+        div.alert.alert-warning(ng-show='!newUser.title && isSubmiting')
+          strong Title is required.
       div.signup-item
         div.signup-label
           span Username
         div.signup-input
-          input(type="text", class="form-control", placeHolder="username")
-
+          input(ng-model="newUser.username", type="text", class="form-control", placeHolder="username")
+        div.alert.alert-warning(ng-show='!newUser.username && isSubmiting')
+          strong Username is required.
       div.signup-item
         div.signup-label
           span Password
         div.signup-input
-          input(type="password", class="form-control", placeHolder="password")
-
+          input(ng-model="newUser.password", type="password", class="form-control", placeHolder="password")
+        div.alert.alert-warning(ng-show='!newUser.password && isSubmiting')
+          strong Password is required.
       div.signup-item
         div.signup-label
           span Confirm Password
         div.signup-input
-          input(type="password", class="form-control", placeHolder="password")
+          input(ng-model="newUser.confirmpassword", type="password", class="form-control", placeHolder="password")
+        div.alert.alert-warning(ng-show='!newUser.confirmpassword && isSubmiting')
+          strong Confirmed password is required.
+        div.alert.alert-warning(ng-show='newUser.confirmpassword && newUser.password && newUser.confirmpassword != newUser.password')
+          strong Confirmed password is in-correct.
     div.signup-button
-      button.btn.btn-danger Cancel
-      button.btn.btn-success Submit
+      button.btn.btn-danger(ui-sref='login') Cancel
+      button.btn.btn-success(ng-click="createUser()") Submit

@@ -1,9 +1,11 @@
 
-userMod.controller("UserLogsController", ['$scope', 'Restangular',
- function ($scope, Restangular){
+userMod.controller("UserLogsController", ['$scope', 'Restangular', '$stateParams',
+ function ($scope, Restangular, $stateParams){
 
   $scope.getAllLogs = function () {
-    Restangular.all('log').getList('getLogs').then(function(logs) {
+    Restangular.all('log').all('getLogs').getList({
+      userId: $stateParams.userId
+    }).then(function(logs) {
       $scope.logs = logs;
       $scope.sortLogs();
     });

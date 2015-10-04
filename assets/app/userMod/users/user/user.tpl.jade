@@ -7,17 +7,17 @@ div#user-profile-container.full-height
         button(type="submit" class="btn btn-danger") Logout
   div#user-profile-info.half-height
     div#user-profile-info-left.col-md-5
-      div.user-avartar-container.height-70
-        div.user-avartar.col-md-5.full-height
+      div.user-avartar-container.height-70.col-md-12
+        div.user-avartar.col-md-4.full-height
           img.img-circle(src="/images/avatar_solid_black.png")
-        div.user-information.col-md-7.full-height
+        div.user-information.col-md-8.full-height
           div.user-info-item.user-name {{currentUser.lastName}} {{currentUser.firstName}}
           div.user-info-item
             span.user-info-key Gender
             span &nbsp; {{currentUser.gender}}
           div.user-info-item
-            span.user-info-key Age
-            span &nbsp; {{currentUser.age}}
+            span.user-info-key Email
+            span &nbsp; {{currentUser.email}}
           div.user-info-item
             span.user-info-key Title
             span &nbsp; {{currentUser.title}}

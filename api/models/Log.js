@@ -30,6 +30,10 @@ module.exports = {
     },
     email: {
       type: 'string'
+    },
+    userId: {
+      required: true,
+      type: 'integer'
     }
   }
 };
